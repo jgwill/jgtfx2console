@@ -1,0 +1,31 @@
+{
+  "name": "jgtfx2console",
+  "version": "0.4.4",
+  "description": "Enhanced PDS Services. ALT console",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "bash pypi-conda-gaia-env.sh",
+    "build": "make dist",
+    "release": "make dist && twine upload dist/*",
+    "publish": "twine upload dist/*",
+    "build-release-by-docker-DEPRECATED": "bash build-by-docker.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgwill/jgtfx2console.git"
+  },
+  "keywords": [
+    "jgt",
+    "jgtfx2console"
+  ],
+  "author": "Guillaume Isabelle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jgwill/jgtfx2console/issues"
+  },
+  "homepage": "https://github.com/jgwill/jgtfx2console#readme"
+}

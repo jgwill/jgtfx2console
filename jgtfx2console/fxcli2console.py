@@ -43,7 +43,7 @@ connection = os.getenv('connection')
 quotes_count = os.getenv('quotes_count')
 
 #from jgtpy import jgtcommon as jgtcomm,iprops
-from jgtutils import jgtcommon as jgtcomm,iprops
+from jgtutils import jgtcommon as jgtcomm,iprops,jgtconstants as c
 
 ##import jgtcommon as jgtcomm,iprops
 
@@ -63,6 +63,7 @@ def parse_args():
     jgtcomm.add_tlid_range_argument(parser)
     #jgtcomm.add_date_arguments(parser)
     jgtcomm.add_max_bars_arguments(parser)
+    jgtcomm.add_keepbidask_argument(parser)
     args = parser.parse_args()
     return args
 
@@ -72,6 +73,13 @@ def main():
     str_user_id = user_id#args.l
     str_password = password#args.p
     str_url = url#args.u
+    
+    keep_bid_ask = args.keepbidask
+    #env variable bypass if env exist JGT_KEEP_BID_ASK=1, keep_bid_ask = True
+    if os.getenv("JGT_KEEP_BID_ASK","0") == "1":
+        print("KEEP BID ASK ENV VAR ON (bypassing the --keepbidask argument)")
+        keep_bid_ask = True
+        
     using_tlid = False
     if args.tlidrange is not None:
       using_tlid= True
@@ -120,10 +128,15 @@ def main():
                     print("{0:s}, {1:,.5f}, {2:,.5f}".format(
                         pd.to_datetime(str(row['Date'])).strftime(date_format), row['Bid'], row['Ask']))
             else:
-                print("Date, Open, High, Low, Close, Median, Volume")
+                csv_header_OHLC = "Date,Open,High,Low,Close,Median,Volume"
+                csv_header_OHLCBIDASK="Date,BidOpen,BidHigh,BidLow,BidClose,AskOpen,AskHigh,AskLow,AskClose,Volume,Open,High,Low,Close,Median"
+                csv_header=csv_header_OHLC
+                if keep_bid_ask:
+                    csv_header=csv_header_OHLCBIDASK
+                print(csv_header)
                 rounder = lpip+1
                 for row in history:
-                    print(format_output(rounder,row,rounder,date_format))
+                    print(format_output(rounder,row,rounder,date_format,keep_bid_ask=keep_bid_ask))
                     
                     # print("{0:s},{1:.5f},{2:.5f},{3:.5f},{4:.5f},{5:.5f},{6:d}".format(                    
                     #     pd.to_datetime(str(row['Date'])).strftime(date_format), open_price, high_price,
@@ -135,15 +148,20 @@ def main():
         except Exception as e:
             jgtcomm.print_exception(e)
 
-def format_output(nb_decimal, row, rounder, date_format = '%Y-%m-%d %H:%M:%S'):
-    open_price = round(((row['BidOpen'] + row['AskOpen']) / 2), rounder)
-    high_price = round(((row['BidHigh'] + row['AskHigh']) / 2), rounder)
-    low_price = round(((row['BidLow'] + row['AskLow']) / 2), rounder)
-    close_price = round(((row['BidClose'] + row['AskClose']) / 2), rounder)
+def format_output(nb_decimal, row, rounder, date_format = '%Y-%m-%d %H:%M:%S',keep_bid_ask=False):
+    open_price = round(((row[c.BIDOPEN] + row[c.ASKOPEN]) / 2), rounder)
+    high_price = round(((row[c.BIDHIGH] + row[c.ASKHIGH]) / 2), rounder)
+    low_price = round(((row[c.BIDLOW] + row[c.ASKLOW]) / 2), rounder)
+    close_price = round(((row[c.BIDCLOSE] + row[c.ASKCLOSE]) / 2), rounder)
     median = round(((high_price + low_price) / 2), rounder)
-    dt_formatted=pd.to_datetime(str(row['Date'])).strftime(date_format)
+    dt_formatted=pd.to_datetime(str(row[c.DATE])).strftime(date_format)
     #print("dt formatted: " + dt_formatted)
-    formatted_string = f"{dt_formatted},{open_price:.{nb_decimal}f},{high_price:.{nb_decimal}f},{low_price:.{nb_decimal}f},{close_price:.{nb_decimal}f},{median:.{nb_decimal}f},{row['Volume']:d}"
+    #if keep_bid_ask:Date,BidOpen,BidHigh,BidLow,BidClose,AskOpen,AskHigh,AskLow,AskClose,Volume,Open,High,Low,Close,Median
+    if keep_bid_ask:
+        formatted_string = f"{dt_formatted},{row[c.BIDOPEN]:.{nb_decimal}f},{row[c.BIDHIGH]:.{nb_decimal}f},{row[c.BIDLOW]:.{nb_decimal}f},{row[c.BIDCLOSE]:.{nb_decimal}f},{row[c.ASKOPEN]:.{nb_decimal}f},{row[c.ASKHIGH]:.{nb_decimal}f},{row[c.ASKLOW]:.{nb_decimal}f},{row[c.ASKCLOSE]:.{nb_decimal}f},{row[c.VOLUME]:d},{open_price:.{nb_decimal}f},{high_price:.{nb_decimal}f},{low_price:.{nb_decimal}f},{close_price:.{nb_decimal}f},{median:.{nb_decimal}f}"
+    else:
+        formatted_string = f"{dt_formatted},{open_price:.{nb_decimal}f},{high_price:.{nb_decimal}f},{low_price:.{nb_decimal}f},{close_price:.{nb_decimal}f},{median:.{nb_decimal}f},{row['Volume']:d}"
+        
     return formatted_string
   
 def format_output1(nb_decimal, row, rounder,date_format = '%Y-%m-%d %H:%M:%S'):

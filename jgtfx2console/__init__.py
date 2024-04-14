@@ -1,4 +1,4 @@
-# Copyright 2023 Jean Guillaume Isabelle
+# Copyright 2024 Jean Guillaume Isabelle
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,6 +42,6 @@ with warnings.catch_warnings():
     # your code here
 
 
-__version__ = "0.4.5"
+__version__ = "0.4.6"
 
 

@@ -75,6 +75,9 @@ def main():
     str_url = url#args.u
     
     keep_bid_ask = args.keepbidask
+
+    # Do we have keep_bid_ask set to true?
+    config = jgtcomm.readconfig()
     #env variable bypass if env exist JGT_KEEP_BID_ASK=1, keep_bid_ask = True
     if os.getenv("JGT_KEEP_BID_ASK","0") == "1":
         keep_bid_ask = True

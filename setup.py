@@ -54,7 +54,7 @@ setup(
         'dev-test': EXTRAS_DEV_TEST,
         'dev-docs': EXTRAS_DEV_DOCS,
     },
-    license='MIT',
+    #license='MIT',
     keywords='data',
     classifiers=[
         "Development Status :: 5 - Production/Stable", 

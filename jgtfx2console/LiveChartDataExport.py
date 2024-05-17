@@ -239,7 +239,7 @@ def parse_xml(config_file):
     tzone = find_in_tree(settings, "Timezone").text
 
     if tzone != 'EST' and tzone != 'UTC' and tzone != 'Local':
-        print('Timezone is not recognized, using EST')
+        print('Timezone is not recognized, using UTC')
         tzone = 'UTC' #Default timezone
 
     print("=============================")

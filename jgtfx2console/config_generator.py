@@ -25,7 +25,7 @@ def generate_config(instruments, timeframes, nb_bar=500, default_headers="DateTi
   ET.SubElement(settings, 'SessionID').text = ''
   ET.SubElement(settings, 'Pin').text = ''
   ET.SubElement(settings, 'Delimiter').text = ','
-  ET.SubElement(settings, 'DateTimeSeparator').text = 'T'
+  ET.SubElement(settings, 'DateTimeSeparator').text = ' '
   ET.SubElement(settings, 'FormatDecimalPlaces').text = 'Y'
   ET.SubElement(settings, 'Timezone').text = 'UTC'
 

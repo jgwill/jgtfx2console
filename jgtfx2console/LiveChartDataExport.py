@@ -232,6 +232,9 @@ def parse_xml(config_file):
     if output_dir == '' or output_dir is None or output_dir=='0':
         output_dir = os.getenv('JGTPY_DATA') or jgtconf.get('JGTPY_DATA')
     dt_separator = find_in_tree(settings, "DateTimeSeparator").text
+
+    if dt_separator == '' or dt_separator is None:
+        dt_separator = ' '
     fdp = find_in_tree(settings, "FormatDecimalPlaces").text
     tzone = find_in_tree(settings, "Timezone").text
 
@@ -245,7 +248,7 @@ def parse_xml(config_file):
     print("Connection: " + str_connection)
     #print("Session ID: " + str_session_id)
     #print("Pin: " + str_pin)
-    print("Delimiter: " + delim)
+    #print("Delimiter: " + delim)
     print("Output Directory: " + output_dir)
     print("DateTime Separator: " + dt_separator)
     print("Format Decimal Places: " + fdp)

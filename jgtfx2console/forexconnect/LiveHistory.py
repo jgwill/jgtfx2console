@@ -119,7 +119,8 @@ class LiveHistoryCreator:
         
         """
         dict_row = LiveHistoryCreator._convert_to_history_item(row)
-        self._add_or_update_internal(pd.DataFrame([dict_row]))
+        self.add_or_update_dict(dict_row)
+
     def add_or_update_dict(self, dict_row):
         """Reserved for future use."""
         if self._history is None:
@@ -130,7 +131,7 @@ class LiveHistoryCreator:
             with self.buffer_lock:
                 self.buffer.append(dict_row)
             return
-        self._add_or_update_internal(pd.DataFrame([dict_row]))
+        self._add_or_update_internal(dict_row)
         self.history_lock.release()
 
     def subscribe(self, on_add_bar_callback: Callable[
@@ -217,8 +218,7 @@ class LiveHistoryCreator:
                                       'AskClose': row['Ask'],
                                       'Volume': row['Volume'],
                                       }]).set_index('Date')
-                self._history = pd.concat([self._history, item], sort=True)
-                self._history.reset_index(drop=True, inplace=True)
+                self._history = self._history.append(item, sort=True)
                 for callback in self._listeners:
                     callback(self._history)
             self.last_ask_price = row['Ask']
@@ -256,6 +256,6 @@ class LiveHistoryCreator:
             return dt.replace(month=month, day=1, hour=0, minute=0, second=0, microsecond=0)
 
         step = step.total_seconds()  # step in seconds
-        timespamp = timespamp = pd.to_datetime(dt).value 
+        timespamp = dt.timestamp()
         new_timespamp = math.floor(timespamp / step) * step
         return datetime.datetime.utcfromtimestamp(new_timespamp)

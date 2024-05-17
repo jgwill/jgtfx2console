@@ -233,7 +233,7 @@ def parse_xml(config_file):
         output_dir = os.getenv('JGTPY_DATA') or jgtconf.get('JGTPY_DATA')
     dt_separator = find_in_tree(settings, "DateTimeSeparator").text
 
-    if dt_separator == '' or dt_separator is None or dt_separator=='0' or dt_separator=='space':
+    if dt_separator == '' or dt_separator is None or dt_separator=='0' or dt_separator=='space'  or dt_separator=='\n' :
         dt_separator = ' '
     fdp = find_in_tree(settings, "FormatDecimalPlaces").text
     tzone = find_in_tree(settings, "Timezone").text

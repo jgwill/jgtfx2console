@@ -4,10 +4,17 @@ import argparse
 import os
 import xml.etree.ElementTree as ET
 
-def generate_config(instruments, timeframes, nb_bar=500, default_headers="DateTime,Bid Open,Bid Close,Ask High,Ask Low,Volume", data_dir=None):
+def generate_config(instruments, timeframes, nb_bar=500, default_headers="DateTime,Bid Open,Bid Close,Ask High,Ask Low,Volume", data_dir=None,dt_sep=' ',tz_default='UTC'):
   # Split the CSV strings into lists
   instruments = instruments.split(',')
   timeframes = timeframes.split(',')
+
+  if dt_sep == '' or dt_sep == 'space' or dt_sep == '0':
+    dt_sep = ' '
+  
+  if dt_sep == 'tab':
+    dt_sep = ' '
+  
 
   # Create the root element
   config = ET.Element('configuration')
@@ -25,7 +32,7 @@ def generate_config(instruments, timeframes, nb_bar=500, default_headers="DateTi
   ET.SubElement(settings, 'SessionID').text = ''
   ET.SubElement(settings, 'Pin').text = ''
   ET.SubElement(settings, 'Delimiter').text = ','
-  ET.SubElement(settings, 'DateTimeSeparator').text = ' '
+  ET.SubElement(settings, 'DateTimeSeparator').text = dt_sep
   ET.SubElement(settings, 'FormatDecimalPlaces').text = 'Y'
   ET.SubElement(settings, 'Timezone').text = 'UTC'
 

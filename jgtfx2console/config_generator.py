@@ -48,7 +48,7 @@ def main():
   parser = argparse.ArgumentParser(description='Generate a configuration file for the ptoLiveChartDataExport')
   parser.add_argument('-i','--instruments', help='The list of instruments to export (comma-separated)')
   parser.add_argument('-t','--timeframes', help='The list of timeframes to export (comma-separated)')
-  parser.add_argument('-o','--outxml', type=str,default="jgtfxliveconfig.xml", help='Output XML file')
+  parser.add_argument('-o','--outxml', type=str,default="fxliveconfig.xml", help='Output XML file')
 
   #data_dir = os.getenv('JGTPY_DATA') or if --data_dir
   parser.add_argument('-d','--data_dir', help='The directory where the data will be saved')

@@ -51,7 +51,8 @@ setup(
     author='GUillaume Isabelle',
     author_email='jgi@jgwill.com',
     url='https://github.com/jgwill/jgtfx2console',
-    packages=find_packages(include=['jgtfx2console', 'jgtfx2console.forexconnect', 'jgtfx2console.forexconnect.lib', 'jgtfx2console.forexconnect.lib.windows', 'jgtfx2console.forexconnect.lib.linux','jgtfx2console/**'], exclude=['*test*']),
+    packages=find_packages(),
+    #packages=find_packages(include=['jgtfx2console', 'jgtfx2console.forexconnect', 'jgtfx2console.forexconnect.lib', 'jgtfx2console.forexconnect.lib.windows', 'jgtfx2console.forexconnect.lib.linux','jgtfx2console/**'], exclude=['*test*']),
     include_package_data=True,
     #install_requires=INSTALL_REQUIRES,
     # entry_points={

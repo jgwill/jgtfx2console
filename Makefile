@@ -54,13 +54,13 @@ authors:
 	cat AUTHORS | sort --ignore-case | uniq >> AUTHORS_
 	mv AUTHORS_ AUTHORS
 
-.PHONY: distn
-distn:
+.PHONY: dist
+dist:
 	make clean
 	python -m build
 
-.PHONY: dist
-dist:
+.PHONY: disto
+disto:
 	make clean
 	python setup.py sdist --format=gztar bdist_wheel
 

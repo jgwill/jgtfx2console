@@ -119,7 +119,7 @@ class LiveHistoryCreator:
         
         """
         dict_row = LiveHistoryCreator._convert_to_history_item(row)
-        self.add_or_update_dict(dict_row)
+        self._add_or_update_internal(pd.DataFrame(data=dict_row))#self.add_or_update_dict(dict_row)
 
     def add_or_update_dict(self, dict_row):
         """Reserved for future use."""
@@ -131,7 +131,7 @@ class LiveHistoryCreator:
             with self.buffer_lock:
                 self.buffer.append(dict_row)
             return
-        self._add_or_update_internal(dict_row)
+        self._add_or_update_internal(pd.DataFrame(data=dict_row))#self._add_or_update_internal(dict_row)
         self.history_lock.release()
 
     def subscribe(self, on_add_bar_callback: Callable[
@@ -218,7 +218,7 @@ class LiveHistoryCreator:
                                       'AskClose': row['Ask'],
                                       'Volume': row['Volume'],
                                       }]).set_index('Date')
-                self._history = self._history.append(item, sort=True)
+                self._history = pd.concat([self._history, item], sort=True)
                 for callback in self._listeners:
                     callback(self._history)
             self.last_ask_price = row['Ask']

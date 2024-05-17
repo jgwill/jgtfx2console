@@ -57,7 +57,7 @@ authors:
 .PHONY: dist
 dist:
 	make clean
-	python setup.py sdist --format=gztar bdist_wheel
+	python -m build
 
 .PHONY: pypi-release
 pypi-release:

@@ -8,6 +8,7 @@ version = "0.4.27"
 authors = [
   { name="Guillaume Isabelle", email="jgi@jgwill.com" },
 ]
+keywords = ["data"]
 
 description = "PDS Services"
 readme = "README.md"
@@ -18,6 +19,21 @@ dependencies = [
   'jgtutils>=0.1.67',
   'tlid'
 ]	
+
+optional-dependencies = {  dev-lint = [
+    "flake8>=3.6.0,<3.7.0",
+    "isort>=4.3.4,<4.4.0",
+  ],  dev-test = [
+    "coverage",
+    "pytest>=3.10",
+  ],  dev-docs = [
+    "readme_renderer",
+    "sphinx",
+    "sphinx_rtd_theme>=0.4.0",
+    "html2text>=2020.1.16",
+    "html2markdown>=0.1.7",
+  ]}
+
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

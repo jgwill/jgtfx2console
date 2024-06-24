@@ -1,4 +1,4 @@
-#%% Imports
+#!/usr/bin/env python
 
 # Copyright 2019 Gehtsoft USA LLC
 
@@ -16,6 +16,7 @@
 # limitations under the License.
 
 import argparse
+import subprocess
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
@@ -69,7 +70,10 @@ def parse_args():
 
 
 def main():
-    args = parse_args()
+    args = parse_args()    
+    if len(sys.argv) == 1:
+        subprocess.run([sys.argv[0], "--help"])
+        return
     str_user_id = user_id#args.l
     str_password = password#args.p
     str_url = url#args.u

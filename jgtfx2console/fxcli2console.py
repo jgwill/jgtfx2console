@@ -56,21 +56,22 @@ connection='Demo'
 quotes_count='800'
 """
 
-def parse_args():
-    parser = argparse.ArgumentParser(description='Process command parameters.')
+def _parse_args():
+    
+    parser = jgtcomm.new_parser("Get historical data from FXConnect","fxcli2console","That cli produces output to console and is used by jgtfxcli as a subprocess alternative for some retrieval that fails.  It is a wrapper around forexconnect package that you can install on python over 3.7.")
     #jgtcomm.add_main_arguments(parser)
     jgtcomm.add_instrument_timeframe_arguments(parser)
     #common_samples.add_date_arguments(parser)
     jgtcomm.add_tlid_range_argument(parser)
     #jgtcomm.add_date_arguments(parser)
-    jgtcomm.add_max_bars_arguments(parser)
+    jgtcomm.add_bars_amount_V2_arguments(parser)
     jgtcomm.add_keepbidask_argument(parser)
-    args = parser.parse_args()
+    args = jgtcomm.parse_args(parser)
     return args
 
 
 def main():
-    args = parse_args()    
+    args = _parse_args()    
     if len(sys.argv) == 1:
         subprocess.run([sys.argv[0], "--help"])
         return
@@ -81,7 +82,7 @@ def main():
     keep_bid_ask = args.keepbidask
 
     #env variable bypass if env exist JGT_KEEP_BID_ASK=1, keep_bid_ask = True
-    if os.getenv("JGT_KEEP_BID_ASK","0") == "1":
+    if os.getenv("JGT_KEEP_BID_ASK","0") == "1" and not args.rmbidask:
         keep_bid_ask = True
         
     using_tlid = False

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jgtfx2console"
-version = "0.4.41"
+version = "0.5.0"
 authors = [
   { name="Guillaume Isabelle", email="jgi@jgwill.com" },
 ]
@@ -16,7 +16,7 @@ requires-python = ">=3.7"
 dependencies = [
   'pandas>=0.25.1',
   'python-dotenv>=0.19.2',
-  'jgtutils>=0.1.113',
+  'jgtutils>=0.2.0',
   'tlid'
 ]	
 

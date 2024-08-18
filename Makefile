@@ -1,4 +1,5 @@
 version := $(shell python3 -c 'from jgtfx2console import __version__; print(__version__)')
+SHELL := /bin/bash
 
 .PHONY: venv
 venv:
@@ -76,3 +77,6 @@ release:
 	git push origin $(version)
 	make pypi-release
 
+.PHONY: bump_jgtutils
+bump_jgtutils:
+	. /opt/binscripts/load.sh && _bump_jgtutils

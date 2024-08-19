@@ -42,6 +42,6 @@ with warnings.catch_warnings():
     # your code here
 
 
-__version__ = "0.5.10"
+__version__ = "0.5.11"
 
 

@@ -58,6 +58,7 @@ authors:
 .PHONY: dist
 dist:
 	make clean
+	bump_jgtutils
 	python -m build
 
 .PHONY: disto

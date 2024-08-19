@@ -55,10 +55,14 @@ authors:
 	cat AUTHORS | sort --ignore-case | uniq >> AUTHORS_
 	mv AUTHORS_ AUTHORS
 
+.PHONY: bump_jgtutils
+bump_jgtutils:
+	. /opt/binscripts/load.sh && _bump_jgtutils
+
 .PHONY: dist
 dist:
 	make clean
-	bump_jgtutils
+	make bump_jgtutils
 	python -m build
 
 .PHONY: disto
@@ -78,6 +82,3 @@ release:
 	git push origin $(version)
 	make pypi-release
 
-.PHONY: bump_jgtutils
-bump_jgtutils:
-	. /opt/binscripts/load.sh && _bump_jgtutils
